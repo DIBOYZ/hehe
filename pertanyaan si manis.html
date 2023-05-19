@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pertanyaan</title>
+</head>
+<body>
+  <h1>Pertanyaan: Sudah makan belum?</h1>
+  
+  <form>
+    <input type="radio" id="sudah" name="makan" value="sudah">
+    <label for="sudah">Sudah</label><br>
+    
+    <input type="radio" id="belum" name="makan" value="belum">
+    <label for="belum">Belum</label><br>
+    
+    <input type="submit" value="Submit">
+  </form>
+  
+  <div id="response"></div>
+
+  <script>
+    const form = document.querySelector('form');
+    const responseDiv = document.getElementById('response');
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const selectedOption = document.querySelector('input[name="makan"]:checked');
+      
+      if (selectedOption) {
+        const value = selectedOption.value;
+        
+        if (value === 'sudah') {
+          responseDiv.textContent = "Alhamdulillah, sudah kenyang nih!";
+        } else if (value === 'belum') {
+          responseDiv.textContent = "Kasian, lapar ya kamu. Jalan yuk cari makan cantik!";
+        }
+        
+        // Membuat URL query string dengan parameter 'jawaban'
+        const queryString = '?jawaban=' + encodeURIComponent(value);
+        
+        // Menggabungkan URL saat ini dengan URL query string
+        const currentURL = window.location.href;
+        const shareURL = currentURL + queryString;
+        
+        // Membuat tautan dengan URL yang dapat dibagikan
+        const shareLink = document.createElement('a');
+        shareLink.href = shareURL;
+        shareLink.textContent = 'Bagikan pertanyaan';
+        
+        // Menambahkan tautan ke dalam dokumen
+        responseDiv.appendChild(shareLink);
+      }
+    });
+  </script>
+</body>
+</html>
